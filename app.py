@@ -21,24 +21,25 @@ def checkDoc(schema=None, collection=None):
         return data_json
 
     list_json_data = list(map(preprocess_data, json_data['data']))
-    list_ids = [doc['_id'] for doc in list_json_data]
-
-    # print('LIST ID')
-    # for x in list_ids:
-        # print(x)
+    list_ids = [ObjectId(doc['_id']) for doc in list_json_data]
 
     db = client.get_database(schema)
-    cursor = db[collection].find({ "_id" : {"$in": list_ids }})
+    cursor = db[collection].find({ "_id" : {"$in": list_ids }}).limit(20)
     count = db[collection].count()
-    check = True
+    cursor2 = db[collection].find().limit(10)
 
-    for doc_json in list_json_data:
-        res = next((sub for sub in cursor if sub['_id'] == doc_json['_id']), None)
-        diff = DeepDiff(res, doc_json)
-        if bool(diff):
-            print(diff)
-            print("KHÁC NHAU")
-            check = False
+    for x in cursor2:
+        print(x)
+
+    # check = True
+
+    # for doc_json in list_json_data:
+    #     res = next((sub for sub in cursor if sub['_id'] == doc_json['_id']), None)
+    #     diff = DeepDiff(res, doc_json)
+    #     if bool(diff):
+    #         print(diff)
+    #         print("KHÁC NHAU")
+    #         check = False
 
     return f'{count}-- {check}'
 
