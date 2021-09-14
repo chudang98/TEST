@@ -25,6 +25,7 @@ def checkDoc(schema=None, collection=None):
 
     print('LIST ID')
     for x in list_ids:
+        print(type(x))
         print(x)
 
     db = client.get_database(schema)
