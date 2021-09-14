@@ -1,0 +1,26 @@
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+[2021-09-14 11:05:24,362] ERROR in app: Exception on /duck/aaaa [GET]
+Traceback (most recent call last):
+  File "/home/dangchu/DevSpace/check-migrate-server/venv/lib/python3.8/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/dangchu/DevSpace/check-migrate-server/venv/lib/python3.8/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/dangchu/DevSpace/check-migrate-server/venv/lib/python3.8/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/dangchu/DevSpace/check-migrate-server/venv/lib/python3.8/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "app.py", line 18, in checkDoc
+    print(list.length)
+AttributeError: type object 'list' has no attribute 'length'
+127.0.0.1 - - [14/Sep/2021 11:05:24] "[35m[1mGET //duck/aaaa HTTP/1.1[0m" 500 -
