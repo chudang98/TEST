@@ -24,19 +24,16 @@ def checkDoc(schema=None, collection=None):
     list_ids = [ObjectId(doc['_id']) for doc in list_json_data]
 
     db = client.get_database(schema)
-    # cursor = db[schema].find({ "_id" : {"$in": list_ids }})
-    cursor = db[collection].find().limit(10)
-
-    for t in cursor:
-        print(t)
-
+    cursor = db[collection].find({ "_id" : {"$in": list_ids }})
+    count = db[collection].count()
+    print(f'COUNT : {count}')
     for doc_json in list_json_data:
         res = next((sub for sub in cursor if sub['_id'] == doc_json['_id']), None)
         diff = DeepDiff(res, doc_json)
         if bool(diff):
+            print(diff)
             print("KHÁC NHAU")
-            break
-    
+
     return f'{schema} -- {collection}'
 
 
