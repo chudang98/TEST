@@ -23,9 +23,9 @@ def checkDoc(schema=None, collection=None):
     list_json_data = list(map(preprocess_data, json_data['data']))
     list_ids = [ObjectId(doc['_id']) for doc in list_json_data]
 
-    db = client.get_database('omre_crawler')
+    db = client.get_database(schema)
     # cursor = db[schema].find({ "_id" : {"$in": list_ids }})
-    cursor = db[schema].find().limit(10)
+    cursor = db[collection].find().limit(10)
 
     for t in cursor:
         print(t)
