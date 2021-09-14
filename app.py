@@ -21,12 +21,11 @@ def checkDoc(schema=None, collection=None):
         return data_json
 
     list_json_data = list(map(preprocess_data, json_data['data']))
-    list_ids = [ObjectId(doc['_id']) for doc in list_json_data]
+    list_ids = [doc['_id'] for doc in list_json_data]
 
-    print('LIST ID')
-    for x in list_ids:
-        print(type(x))
-        print(x)
+    # print('LIST ID')
+    # for x in list_ids:
+        # print(x)
 
     db = client.get_database(schema)
     cursor = db[collection].find({ "_id" : {"$in": list_ids }})
