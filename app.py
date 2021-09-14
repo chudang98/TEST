@@ -41,8 +41,9 @@ def checkDoc(schema=None, collection=None):
         res = next((sub for sub in res_doc if sub['_id'] == doc_json['_id']), None)
         diff = DeepDiff(res, doc_json)
         if bool(diff):
-            print("-------------------------------------")
-            print(doc_json['_id'])
+            # print("-------------------------------------")
+            # print(doc_json['_id'])
+            print(diff)
             print("KHÁC NHAU")
             check = False
 
