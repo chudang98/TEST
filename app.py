@@ -32,7 +32,7 @@ def checkDoc(schema=None, collection=None):
 
     def process_result(doc_mongo):
         doc_id = doc_mongo['_id']
-        doc_mongo['_id'] = doc_id.to_string()
+        doc_mongo['_id'] = str(doc_id)
 
     res_doc = list(map(process_result, cursor))
 
