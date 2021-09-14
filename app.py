@@ -26,12 +26,12 @@ def checkDoc(schema=None, collection=None):
     db = client.get_database(schema)
     cursor = db[collection].find({ "_id" : {"$in": list_ids }}).limit(20)
     count = db[collection].count()
-    cursor2 = db[collection].find().limit(10)
+    cursor2 = db[collection].find().limit(3)
 
     for x in cursor2:
-        print(x)
+        print(type(x['_id']))
 
-    # check = True
+    check = True
 
     # for doc_json in list_json_data:
     #     res = next((sub for sub in cursor if sub['_id'] == doc_json['_id']), None)
