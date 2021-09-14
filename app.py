@@ -25,6 +25,7 @@ def checkDoc(schema=None, collection=None):
 
     db = client.get_database(schema)
     cursor = db[collection].find({ "_id" : {"$in": list_ids }}).limit(20)
+    test = db[collection].find({ "_id" : ObjectId('5fedaaa5ada3e75b543a576c') })
     count = db[collection].count()
     cursor2 = db[collection].find().limit(3)
 
@@ -32,14 +33,23 @@ def checkDoc(schema=None, collection=None):
         print(type(x['_id']))
 
     check = True
+    print('--------------------------------')
 
-    # for doc_json in list_json_data:
-    #     res = next((sub for sub in cursor if sub['_id'] == doc_json['_id']), None)
-    #     diff = DeepDiff(res, doc_json)
-    #     if bool(diff):
-    #         print(diff)
-    #         print("KHÁC NHAU")
-    #         check = False
+    for y in cursor:
+        print(y)
+    print('--------------------------------')
+    for n in test:
+        print(n)
+
+
+
+    for doc_json in list_json_data:
+        res = next((sub for sub in cursor if sub['_id'] == doc_json['_id']), None)
+        diff = DeepDiff(res, doc_json)
+        if bool(diff):
+            print(diff)
+            print("KHÁC NHAU")
+            check = False
 
     return f'{count}-- {check}'
 
