@@ -26,13 +26,6 @@ def checkDoc(schema=None, collection=None):
     db = client.get_database(schema)
     cursor = db[collection].find({ "_id" : {"$in": list_ids }})
     count = db[collection].count()
-
-    allDoc = db[collection].find({}).limit(3)
-    for x in allDoc:
-        print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-        print(x)
-        print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-
     check = True
 
     # for doc_json in list_json_data:
