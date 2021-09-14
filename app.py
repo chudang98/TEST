@@ -43,8 +43,9 @@ def checkDoc(schema=None, collection=None):
         diff = DeepDiff(res, doc_json)
         if bool(diff):
             print("-------------------------------------")
-            print(doc_json['_id'])
+            print('db.' + collection + '.find({ "_id": ObjectId("' + doc_json['_id'] + '")})')
             print(diff)
+            falseTotal += 1
 
     return f'\nTổng document : {count}\nSố doc sai : {falseTotal}\nTổng số doc check: {total}\n'
 
