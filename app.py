@@ -28,6 +28,9 @@ def checkDoc(schema=None, collection=None):
     count = db[collection].count()
     check = True
 
+    for x in cursor:
+        print(x)
+
     # for doc_json in list_json_data:
     #     res = next((sub for sub in cursor if sub['_id'] == doc_json['_id']), None)
     #     diff = DeepDiff(res, doc_json)
