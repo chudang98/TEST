@@ -28,17 +28,17 @@ def checkDoc(schema=None, collection=None):
     count = db[collection].count()
     print(f'COUNT : {count}')
 
-    for x in cursor:
-        print(x)
+    check = True
 
-    # for doc_json in list_json_data:
-    #     res = next((sub for sub in cursor if sub['_id'] == doc_json['_id']), None)
-    #     diff = DeepDiff(res, doc_json)
-    #     if bool(diff):
-    #         print(diff)
-    #         print("KHÁC NHAU")
+    for doc_json in list_json_data:
+        res = next((sub for sub in cursor if sub['_id'] == doc_json['_id']), None)
+        diff = DeepDiff(res, doc_json)
+        if bool(diff):
+            print(diff)
+            print("KHÁC NHAU")
+            check = False
 
-    return f'{schema} -- {collection}'
+    return f'{count}-- {check}'
 
 
 if __name__ == "__main__":
