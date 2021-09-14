@@ -5,7 +5,7 @@ from deepdiff import DeepDiff
 import os
 
 app = Flask(__name__)
-db_uri = os.getenv('MONGO_URL')
+db_uri = os.getenv('MONGO_URI')
 client = MongoClient(db_uri)
 
 @app.route("/<schema>/<collection>")
@@ -23,11 +23,9 @@ def checkDoc(schema=None, collection=None):
     list_json_data = list(map(preprocess_data, json_data['data']))
     list_ids = [ObjectId(doc['_id']) for doc in list_json_data]
 
-    for idx in list_ids:
-        print(idx)
-
     db = client.get_database('omre_crawler')
-    cursor = db[schema].find({ "_id" : {"$in": list_ids }})
+    # cursor = db[schema].find({ "_id" : {"$in": list_ids }})
+    cursor = db[schema].find().limit(10)
 
     for t in cursor:
         print(t)
