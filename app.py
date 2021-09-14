@@ -12,6 +12,7 @@ client = MongoClient(db_uri)
 def checkDoc(schema=None, collection=None):
     json_data = request.json
     date_fields = json_data['date']
+
     def preprocess_data(data_json):
         new_id = data_json["_id"]["oid"]
         data_json['_id'] = new_id
@@ -24,17 +25,22 @@ def checkDoc(schema=None, collection=None):
     list_ids = [ObjectId(doc['_id']) for doc in list_json_data]
 
     db = client.get_database(schema)
-    cursor = db[collection].find({ "_id" : {"$in": list_ids }}).limit(20)
+    cursor = list(db[collection].find({ "_id" : {"$in": list_ids }}).limit(20))
     count = db[collection].count()
 
     check = True
-    print('--------------------------------')
-    for y in cursor:
-        print(y)
-    print('--------------------------------')
+
+    def process_result(doc_mongo):
+        doc_id = doc_mongo['_id']
+        doc_mongo['_id'] = doc_id.to_string()
+
+    res_doc = list(map(process_result, cursor))
+
+    for doc_mon in res_doc:
+        print(doc_mon)
     
     for doc_json in list_json_data:
-        res = next((sub for sub in cursor if sub['_id'] == doc_json['_id']), None)
+        res = next((sub for sub in res_doc if sub['_id'] == doc_json['_id']), None)
         print(res)
         print(doc_json)
         # diff = DeepDiff(res, doc_json)
