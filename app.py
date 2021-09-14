@@ -28,14 +28,12 @@ def checkDoc(schema=None, collection=None):
     cursor = list(db[collection].find({ "_id" : {"$in": list_ids }}).limit(20))
     count = db[collection].count()
 
-    for j in cursor:
-        print(j)
-
     check = True
 
     def process_result(doc_mongo):
         doc_id = doc_mongo['_id']
         doc_mongo['_id'] = str(doc_id)
+        return doc_mongo
 
     res_doc = list(map(process_result, cursor))
 
