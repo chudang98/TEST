@@ -36,19 +36,15 @@ def checkDoc(schema=None, collection=None):
         return doc_mongo
 
     res_doc = list(map(process_result, cursor))
-
-    for doc_mon in res_doc:
-        print(doc_mon)
     
     for doc_json in list_json_data:
         res = next((sub for sub in res_doc if sub['_id'] == doc_json['_id']), None)
-        print(res)
-        print(doc_json)
-        # diff = DeepDiff(res, doc_json)
-        # if bool(diff):
-        #     print(diff)
-        #     print("KHÁC NHAU")
-        #     check = False
+        diff = DeepDiff(res, doc_json)
+        if bool(diff):
+            print("-------------------------------------")
+            print(doc_json['_id'])
+            print("KHÁC NHAU")
+            check = False
 
     return f'{count}-- {check}'
 
