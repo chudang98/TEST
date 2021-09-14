@@ -28,7 +28,8 @@ def checkDoc(schema=None, collection=None):
     cursor = list(db[collection].find({ "_id" : {"$in": list_ids }}).limit(20))
     count = db[collection].count()
 
-    check = True
+    total = len(list_json_data)
+    falseTotal = 0
 
     def process_result(doc_mongo):
         doc_id = doc_mongo['_id']
@@ -41,13 +42,11 @@ def checkDoc(schema=None, collection=None):
         res = next((sub for sub in res_doc if sub['_id'] == doc_json['_id']), None)
         diff = DeepDiff(res, doc_json)
         if bool(diff):
-            # print("-------------------------------------")
-            # print(doc_json['_id'])
+            print("-------------------------------------")
+            print(doc_json['_id'])
             print(diff)
-            print("KHÁC NHAU")
-            check = False
 
-    return f'{count}-- {check}'
+    return f'\nTổng document : {count}\nSố doc sai : {falseTotal}\nTổng số doc check: {total}\n'
 
 
 if __name__ == "__main__":
