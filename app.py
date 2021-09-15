@@ -15,7 +15,7 @@ def checkDoc(schema=None, collection=None):
     objectId = json_data['object_id']
 
     def preprocess_data(data_json):
-        if ObjectId:
+        if objectId:
             new_id = data_json["_id"]["oid"]
             data_json['_id'] = new_id
         for field in date_fields:
@@ -27,7 +27,7 @@ def checkDoc(schema=None, collection=None):
     if objectId:
         list_ids = [ObjectId(doc['_id']) for doc in list_json_data]
     else :
-        list_ids = [ObjectId(doc['_id']) for doc in list_json_data]
+        list_ids = [doc['_id'] for doc in list_json_data]
 
     db = client.get_database(schema)
     cursor = list(db[collection].find({ "_id" : {"$in": list_ids }}).limit(20))
