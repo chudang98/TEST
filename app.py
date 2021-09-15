@@ -12,17 +12,22 @@ client = MongoClient(db_uri)
 def checkDoc(schema=None, collection=None):
     json_data = request.json
     date_fields = json_data['date']
+    objectId = json_data['object_id']
 
     def preprocess_data(data_json):
-        new_id = data_json["_id"]["oid"]
-        data_json['_id'] = new_id
+        if ObjectId:
+            new_id = data_json["_id"]["oid"]
+            data_json['_id'] = new_id
         for field in date_fields:
             date_time1 = data_json[field]
             data_json[field] = datetime.datetime.strptime(date_time1, '%Y-%m-%dT%H:%M:%S.%fZ')
         return data_json
 
     list_json_data = list(map(preprocess_data, json_data['data']))
-    list_ids = [ObjectId(doc['_id']) for doc in list_json_data]
+    if objectId:
+        list_ids = [ObjectId(doc['_id']) for doc in list_json_data]
+    else :
+        list_ids = [ObjectId(doc['_id']) for doc in list_json_data]
 
     db = client.get_database(schema)
     cursor = list(db[collection].find({ "_id" : {"$in": list_ids }}).limit(20))
