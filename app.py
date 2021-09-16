@@ -20,7 +20,9 @@ def checkDoc(schema=None, collection=None):
             data_json['_id'] = new_id
         for field in date_fields:
             date_time1 = data_json[field]
-            data_json[field] = datetime.datetime.strptime(date_time1, '%Y-%m-%dT%H:%M:%S.%fZ')
+            if not date_time1 is None:
+                pass
+                data_json[field] = datetime.datetime.strptime(date_time1, '%Y-%m-%dT%H:%M:%S.%fZ')
         return data_json
 
     list_json_data = list(map(preprocess_data, json_data['data']))
