@@ -11,9 +11,12 @@ db_uri = os.getenv('HIVE_URI', "jdbc:hive2://localhost")
 @app.route("/random")
 def randomData():
     json_data = request.json
+    print(json_data)
     tables = json_data['tables']
     prefix_table = json_data['table_prefix']
+    # indate dùng để lấy data trong ngày nào
     in_date = json_data['date']
+    print(in_date)
 
     # host = "host.docker.internal"
     host = "localhost"
